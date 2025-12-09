@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,8 @@ import {
   CheckboxIndicator,
 } from "@/components/ui/checkbox";
 import RatingButton from "@/components/home/rating-button";
+import ReviewPanel from "@/components/home/review-panel";
+import { mockReviews } from "@/constants/mockReviews";
 
 const riders = [
   {
@@ -54,6 +56,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 export default function Index() {
   const [checkedIds, setCheckedIds] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
+  const reviews = useMemo(() => mockReviews, []);
 
   const COLLAPSED = SCREEN_HEIGHT * 0.9;
   const EXPANDED = 0;
@@ -244,6 +247,8 @@ export default function Index() {
           </Badge>
         </ScrollView>
       </Animated.View>
+
+      <ReviewPanel visible={open} onClose={() => setOpen(false)} reviews={reviews} initialRating={4.8} />
     </View>
   );
 }
