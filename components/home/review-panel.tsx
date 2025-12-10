@@ -210,7 +210,7 @@ export default function ReviewPanel({
                             className="h-full bg-red-900 rounded-full"
                           />
                         </Box>
-                        <Text className="text-gray-500 text-xs text-right w-8">
+                        <Text className="text-gray-500 text-xs text-right w-9">
                           {(percent.toString().length === 1
                             ? "  "
                             : percent.toString().length === 2

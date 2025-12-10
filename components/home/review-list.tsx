@@ -16,9 +16,12 @@ export default function ReviewList({
   if (!reviews || reviews.length === 0) return <EmptyState />;
 
   return (
-    <View style={{ paddingBottom: 160 }}>
+    <View style={{ paddingBottom: 30 }}>
       {reviews.map((item, index) => (
-        <View key={item.id} style={{ marginBottom: index !== reviews.length - 1 ? 16 : 0 }}>
+        <View
+          key={item.id}
+          style={{ marginBottom: index !== reviews.length - 1 ? 16 : 0 }}
+        >
           <ReviewItem review={item} />
         </View>
       ))}
