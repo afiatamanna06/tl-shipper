@@ -153,8 +153,8 @@ export default function ReviewPanel({
             }}
           />
 
-          {/* HEADER */}
-          <Box className="px-4 pt-2 pb-3">
+          {/* HEADER: always sticky */}
+          <View className="px-4 pt-2 pb-3 bg-white z-10">
             <HStack className="justify-between items-start">
               <VStack>
                 <Text className="text-lg font-bold">
@@ -169,9 +169,19 @@ export default function ReviewPanel({
                 <Text className="text-xl">✕</Text>
               </Button>
             </HStack>
+          </View>
 
+          {/* SCROLLABLE REVIEWS */}
+          <ScrollView
+            scrollEnabled={scrollEnabled}
+            contentContainerStyle={{ paddingTop: 0, paddingBottom: 32 }}
+            onTouchStart={() => {
+              if (sheetTop > EXPANDED) setScrollEnabled(false);
+            }}
+            stickyHeaderIndices={[0, 1]} // make sort + filter sticky
+          >
             {/* Rating Card */}
-            <Box className="mt-4 p-4 bg-red-900/5 rounded-xl">
+            <Box className="mt-4 mx-4 p-4 bg-red-900/5 rounded-xl">
               <HStack className="items-center">
                 {/* Left Rating */}
                 <VStack className="items-center">
@@ -226,31 +236,27 @@ export default function ReviewPanel({
                 </VStack>
               </HStack>
             </Box>
-          </Box>
 
-          {/* FILTERS */}
-          <Box className="px-4 py-1 flex-row justify-between items-center">
-            <Text className="text-lg font-bold">
-              ড্রাইভার রিভিউ ({toBanglaNumber(filteredReviews.length)})
-            </Text>
-            <SortDropdown value={sort} onChange={setSort} />
-          </Box>
+            {/* Sticky Section 1: Review count + Sort */}
+            <View className="bg-white">
+              <Box className="px-4 py-1 flex-row justify-between items-center">
+                <Text className="text-lg font-bold">
+                  ড্রাইভার রিভিউ ({toBanglaNumber(filteredReviews.length)})
+                </Text>
+                <SortDropdown value={sort} onChange={setSort} />
+              </Box>
 
-          <Box className="px-4 py-3">
-            <HStack className="justify-between items-center">
-              <FilterPills selected={filter} onSelect={setFilter} />
-            </HStack>
-          </Box>
+              <Box className="px-4 py-3">
+                <HStack className="justify-between items-center">
+                  <FilterPills selected={filter} onSelect={setFilter} />
+                </HStack>
+              </Box>
+            </View>
 
-          {/* REVIEW LIST */}
-          <ScrollView
-            scrollEnabled={scrollEnabled}
-            contentContainerStyle={{ padding: 16 }}
-            onTouchStart={() => {
-              if (sheetTop > EXPANDED) setScrollEnabled(false);
-            }}
-          >
-            <ReviewList reviews={filteredReviews} />
+            {/* Reviews List */}
+            <View style={{ paddingHorizontal: 16, paddingTop: 8 }}>
+              <ReviewList reviews={filteredReviews} />
+            </View>
           </ScrollView>
         </Box>
       </Animated.View>
