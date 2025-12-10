@@ -22,3 +22,48 @@ export const mockReviews: Review[] = [
   //   tags: i % 2 ? ["ভালো ব্যবহার"] : ["তথ্য"]
   // }))
 ];
+
+
+// Helper to convert Bangla digits to English
+export function banglaToEnglishNumber(bangla: string) {
+  const map: Record<string, string> = {
+    "০": "0",
+    "১": "1",
+    "২": "2",
+    "৩": "3",
+    "৪": "4",
+    "৫": "5",
+    "৬": "6",
+    "৭": "7",
+    "৮": "8",
+    "৯": "9",
+  };
+  return bangla.replace(/[০-৯]/g, (d) => map[d]);
+}
+
+// Helper to convert Bangla date like "২ জানুয়ারি ২০২৪" to a Date object
+export function parseBanglaDate(dateStr: string) {
+  const monthMap: Record<string, number> = {
+    "জানুয়ারি": 0,
+    "ফেব্রুয়ারি": 1,
+    "মার্চ": 2,
+    "এপ্রিল": 3,
+    "মে": 4,
+    "জুন": 5,
+    "জুলাই": 6,
+    "আগস্ট": 7,
+    "সেপ্টেম্বর": 8,
+    "অক্টোবর": 9,
+    "নভেম্বর": 10,
+    "ডিসেম্বর": 11,
+  };
+
+  const parts = dateStr.split(" ");
+  if (parts.length !== 3) return new Date(0); // fallback
+
+  const day = Number(banglaToEnglishNumber(parts[0]));
+  const month = monthMap[parts[1]] ?? 0;
+  const year = Number(banglaToEnglishNumber(parts[2]));
+
+  return new Date(year, month, day);
+}

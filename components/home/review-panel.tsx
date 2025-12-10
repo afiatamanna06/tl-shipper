@@ -1,4 +1,4 @@
-import { Review } from "@/constants/mockReviews";
+import { parseBanglaDate, Review } from "@/constants/mockReviews";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Fontisto from "@expo/vector-icons/Fontisto";
@@ -102,11 +102,13 @@ export default function ReviewPanel({
     const r = reviews.filter((item) =>
       filter ? item.rating === filter : true
     );
+
     r.sort((a, b) => {
-      const da = Number(a.date.replace(/[^0-9]/g, ""));
-      const db = Number(b.date.replace(/[^0-9]/g, ""));
+      const da = parseBanglaDate(a.date).getTime();
+      const db = parseBanglaDate(b.date).getTime();
       return sort === "new-to-old" ? db - da : da - db;
     });
+
     return r;
   }, [reviews, filter, sort]);
 
