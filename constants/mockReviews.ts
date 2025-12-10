@@ -12,7 +12,7 @@ export const mockReviews: Review[] = [
   { id: 'r2', rating: 4, text: "গাড়িটি পরিষ্কার ছিল এবং ড্রাইভার নম্র ছিলেন।", date: "২০২৫-০২-০৫", tags: ["পরিষ্কার"], reviewer: "সাদিয়া" },
   { id: 'r3', rating: 2, text: "ড্রাইভার দেরিতে উপস্থিত ছিলেন এবং রাস্তা বোঝেননি।", date: "২০২৫-০৩-১৫", tags: ["বিচলিত"], reviewer: "রফিক" },
   // Add many more for scrolling
-  ...Array.from({ length: 12 }).map((_, i) => ({
+  ...Array.from({ length: 19 }).map((_, i) => ({
     id: `r${i+4}`,
     rating: Math.ceil(Math.random() * 5),
     text: `সাম্পল রিভিউ নম্বর ${i+4}. (এইটি স্ক্রল টেস্টের জন্য)`,

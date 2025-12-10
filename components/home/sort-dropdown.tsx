@@ -1,5 +1,7 @@
 import React from "react";
+import { Text } from "react-native";
 import { Menu, MenuItem, MenuItemLabel } from "../ui/menu";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { Button, ButtonText } from "../ui/button";
 
 type Props = {
@@ -10,14 +12,14 @@ type Props = {
 export default function SortDropdown({ value, onChange }: Props) {
   return (
     <Menu
-      placement="top"
-      offset={5}
+      placement="bottom"
+      className="w-48 bg-white border-0 shadow-lg text-gray-600"
       disabledKeys={["Settings"]}
       trigger={({ ...triggerProps }) => {
         return (
-          <Button {...triggerProps}>
-            <ButtonText>
-              {value === "new-to-old" ? "নতুন থেকে পুরাতন" : "পুরাতন থেকে নতুন"}
+          <Button {...triggerProps} className="p-0 bg-transparent shadow-none">
+            <ButtonText className="w-32">
+              {value === "new-to-old" ? "নতুন থেকে পুরানো" : "পুরাতন থেকে নতুন"}
             </ButtonText>
           </Button>
         );
@@ -26,16 +28,20 @@ export default function SortDropdown({ value, onChange }: Props) {
       <MenuItem
         key="new-to-old"
         textValue="new-to-old"
+        className="w-[100%] flex-row justify-between pr-10"
         onPress={() => onChange("new-to-old")}
       >
-        <MenuItemLabel size="sm">নতুন থেকে পুরাতন</MenuItemLabel>
+        <MenuItemLabel size="sm" className="text-gray-600 w-[60%]">নতুন থেকে পুরানো</MenuItemLabel>
+        {value === "new-to-old" && <Text className="text-blue-500 w-10"><AntDesign name="check" size={16} /></Text>}
       </MenuItem>
       <MenuItem
         key="old-to-new"
         textValue="old-to-new"
+        className="w-[100%] flex-row justify-between pr-10"
         onPress={() => onChange("old-to-new")}
       >
-        <MenuItemLabel size="sm">পুরাতন থেকে নতুন</MenuItemLabel>
+        <MenuItemLabel size="sm" className="text-gray-600 w-[60%]">পুরানো থেকে নতুন</MenuItemLabel>
+        {value === "old-to-new" && <Text className="text-blue-500 w-10"><AntDesign name="check" size={16} /></Text>}
       </MenuItem>
     </Menu>
   );

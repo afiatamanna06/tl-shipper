@@ -1,7 +1,7 @@
 import React from "react";
-import { Text } from "react-native";
-import { HStack } from "../ui/hstack";
+import { Text, View } from "react-native";
 import { Button } from "../ui/button";
+import { toBanglaNumber } from "./review-panel";
 
 type Props = {
   selected: number | null;
@@ -12,23 +12,27 @@ const options = [null, 5, 4, 3, 2, 1];
 
 export default function FilterPills({ selected, onSelect }: Props) {
   return (
-    <HStack className="space-x-2 flex-wrap">
+    <View className="flex-row flex-wrap gap-2">
       {options.map((opt) => {
-        const label = opt === null ? "সব" : `${opt}★`;
+        const label = opt === null ? "সব" : `${opt} ★`;
         const active = opt === selected;
+
         return (
           <Button
             key={String(opt)}
             variant={active ? "solid" : "outline"}
             onPress={() => onSelect(opt)}
-            className="px-3 py-1 rounded-full"
+            className={`
+          rounded-full px-3 h-7 
+          ${active ? "bg-red-900" : "bg-white border-gray-200"}
+        `}
           >
-            <Text className={`${active ? "text-white" : "text-black"}`}>
-              {label}
+            <Text className={`text-sm ${active ? "text-white" : "text-black"}`}>
+              {toBanglaNumber(label)}
             </Text>
           </Button>
         );
       })}
-    </HStack>
+    </View>
   );
 }

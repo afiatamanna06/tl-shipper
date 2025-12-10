@@ -1,5 +1,7 @@
 import { Review } from "@/constants/mockReviews";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Fontisto from "@expo/vector-icons/Fontisto";
 import {
   Dimensions,
   StyleSheet,
@@ -29,7 +31,12 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   reviews: Review[];
-  initialRating?: number;
+  initialRating?: number | string;
+};
+
+export const toBanglaNumber = (num: number | string) => {
+  const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return num.toString().replace(/[0-9]/g, (d) => bengaliDigits[Number(d)]);
 };
 
 export default function ReviewPanel({
@@ -145,35 +152,39 @@ export default function ReviewPanel({
           />
 
           {/* HEADER */}
-          <Box className="px-4 pt-2 pb-3 border-b border-gray-200">
+          <Box className="px-4 pt-2 pb-3">
             <HStack className="justify-between items-start">
               <VStack>
                 <Text className="text-lg font-bold">
                   ড্রাইভার রেটিং & রিভিউ
                 </Text>
                 <Text className="text-gray-600">
-                  Parvej Maruf | টোটাল ট্রিপ ৩৯
+                  Parvej Maruf | টোটাল ট্রিপঃ ৩৯
                 </Text>
               </VStack>
 
-              <Button onPress={onClose}>
+              <Button onPress={onClose} className="bg-white p-1.5">
                 <Text className="text-xl">✕</Text>
               </Button>
             </HStack>
 
             {/* Rating Card */}
-            <Box className="mt-4 p-4 bg-gray-100 rounded-xl">
+            <Box className="mt-4 p-4 bg-red-900/5 rounded-xl">
               <HStack className="items-center">
                 {/* Left Rating */}
-                <VStack className="w-[70px]">
-                  <HStack className="items-center">
-                    <Text className="text-3xl font-bold">
-                      {initialRating.toFixed(1)}
+                <VStack className="items-center">
+                  <HStack className="items-center gap-1">
+                    <Text className="text-yellow-500 text-lg ml-1">
+                      <MaterialIcons name="stars" size={24} />
                     </Text>
-                    <Text className="text-yellow-500 text-lg ml-1">★</Text>
+                    <Text className="text-3xl font-bold">
+                      {typeof initialRating === "number"
+                        ? initialRating.toFixed(1)
+                        : initialRating}
+                    </Text>
                   </HStack>
                   <Text className="text-gray-600 mt-1">
-                    ({ratingCount} রেটিং)
+                    ({toBanglaNumber(ratingCount)} রেটিং)
                   </Text>
                 </VStack>
 
@@ -187,16 +198,25 @@ export default function ReviewPanel({
                       : 0;
                     return (
                       <HStack key={s} className="items-center mb-1.5">
-                        <Text className="text-xs w-4">{s}</Text>
-                        <Text className="text-xs w-4 text-yellow-500">★</Text>
-                        <Box className="mx-2 flex-1 h-[6px] bg-gray-300 rounded-full overflow-hidden">
+                        <Text className="text-xs mr-1">
+                          {toBanglaNumber(s)}
+                        </Text>
+                        <Text className="text-xs text-yellow-500">
+                          <Fontisto name="star" size={10} />
+                        </Text>
+                        <Box className="mx-1 w-40 h-[6px] bg-neutral-200 rounded-full overflow-hidden">
                           <Box
                             style={{ width: `${percent}%` }}
-                            className="h-full bg-red-500 rounded-full"
+                            className="h-full bg-red-900 rounded-full"
                           />
                         </Box>
-                        <Text className="text-gray-500 text-xs">
-                          {percent}%
+                        <Text className="text-gray-500 text-xs text-right w-8">
+                          {(percent.toString().length === 1
+                            ? "  "
+                            : percent.toString().length === 2
+                            ? " "
+                            : "") + toBanglaNumber(percent)}
+                          %
                         </Text>
                       </HStack>
                     );
@@ -207,10 +227,16 @@ export default function ReviewPanel({
           </Box>
 
           {/* FILTERS */}
-          <Box className="px-4 py-3 border-b border-gray-200">
+          <Box className="px-4 py-1 flex-row justify-between items-center">
+            <Text className="text-lg font-bold">
+              ড্রাইভার রিভিউ ({toBanglaNumber(filteredReviews.length)})
+            </Text>
+            <SortDropdown value={sort} onChange={setSort} />
+          </Box>
+
+          <Box className="px-4 py-3">
             <HStack className="justify-between items-center">
               <FilterPills selected={filter} onSelect={setFilter} />
-              <SortDropdown value={sort} onChange={setSort} />
             </HStack>
           </Box>
 

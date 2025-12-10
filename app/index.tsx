@@ -248,7 +248,7 @@ export default function Index() {
         </ScrollView>
       </Animated.View>
 
-      <ReviewPanel visible={open} onClose={() => setOpen(false)} reviews={reviews} initialRating={4.8} />
+      <ReviewPanel visible={open} onClose={() => setOpen(false)} reviews={reviews} initialRating={"৫.০"} />
     </View>
   );
 }
