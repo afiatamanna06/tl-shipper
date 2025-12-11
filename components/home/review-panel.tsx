@@ -32,6 +32,7 @@ type Props = {
   onClose: () => void;
   reviews: Review[];
   initialRating?: number | string;
+  name?: string;
 };
 
 export const toBanglaNumber = (num: number | string) => {
@@ -44,14 +45,28 @@ export default function ReviewPanel({
   onClose,
   reviews,
   initialRating = 5.0,
+  name = "Parvej Maruf",
 }: Props) {
   const panY = useRef(new Animated.Value(COLLAPSED)).current;
   const lastOffset = useRef(COLLAPSED);
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [sheetTop, setSheetTop] = useState(COLLAPSED);
 
+  const [hasBorder, setHasBorder] = useState(false);
+
+  const scrollRef = useRef<ScrollView>(null);
+
   const [filter, setFilter] = useState<number | null>(null);
   const [sort, setSort] = useState<"new-to-old" | "old-to-new">("new-to-old");
+
+  useEffect(() => {
+    if (visible) {
+      // Wait for sheet animation to settle
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: 0, animated: false });
+      }, 50);
+    }
+  }, [visible]);
 
   // Track panY value
   useEffect(() => {
@@ -82,16 +97,34 @@ export default function ReviewPanel({
         panY.setValue(newPos);
       },
       onPanResponderRelease: (_, gestureState) => {
-        let finalPos =
-          gestureState.dy < 0 || sheetTop < COLLAPSED / 2
-            ? EXPANDED
-            : COLLAPSED;
+        const endPos = lastOffset.current + gestureState.dy;
+
+        // clamp within range
+        let position = Math.max(EXPANDED, Math.min(endPos, COLLAPSED));
+
+        // Determine nearest snap point: EXPANDED, MID, COLLAPSED
+        const distToExpanded = Math.abs(position - EXPANDED);
+        const distToMid = Math.abs(position - MID);
+        const distToCollapsed = Math.abs(position - COLLAPSED);
+
+        let finalPos = MID;
+
+        if (distToExpanded < distToMid && distToExpanded < distToCollapsed) {
+          finalPos = EXPANDED;
+        } else if (
+          distToCollapsed < distToMid &&
+          distToCollapsed < distToExpanded
+        ) {
+          finalPos = COLLAPSED;
+        }
+
         Animated.spring(panY, {
           toValue: finalPos,
           useNativeDriver: false,
         }).start(() => {
           lastOffset.current = finalPos;
           setScrollEnabled(finalPos === EXPANDED);
+
           if (finalPos === COLLAPSED) onClose();
         });
       },
@@ -154,15 +187,18 @@ export default function ReviewPanel({
           />
 
           {/* HEADER: always sticky */}
-          <View className="px-4 pt-2 pb-3 bg-white z-10">
+          <View
+            className={`
+              px-4 pt-2 pb-3 bg-white z-10 
+              ${hasBorder ? "border-b border-gray-200" : ""}
+            `}
+          >
             <HStack className="justify-between items-start">
               <VStack>
                 <Text className="text-lg font-bold">
                   ড্রাইভার রেটিং & রিভিউ
                 </Text>
-                <Text className="text-gray-600">
-                  Parvej Maruf | টোটাল ট্রিপঃ ৩৯
-                </Text>
+                <Text className="text-gray-600">{name} | টোটাল ট্রিপঃ ৩৯</Text>
               </VStack>
 
               <Button onPress={onClose} className="bg-white p-1.5">
@@ -173,6 +209,12 @@ export default function ReviewPanel({
 
           {/* SCROLLABLE REVIEWS */}
           <ScrollView
+            ref={scrollRef}
+            onScroll={(e) => {
+              const y = e.nativeEvent.contentOffset.y;
+              setHasBorder(y > 2); // when scrolled slightly, add border
+            }}
+            scrollEventThrottle={16}
             scrollEnabled={scrollEnabled}
             contentContainerStyle={{ paddingTop: 0, paddingBottom: 32 }}
             onTouchStart={() => {
@@ -239,7 +281,7 @@ export default function ReviewPanel({
 
             {/* Sticky Section 1: Review count + Sort */}
             <View className="bg-white">
-              <Box className="px-4 py-1 flex-row justify-between items-center">
+              <Box className="px-4 pt-4 flex-row justify-between items-center">
                 <Text className="text-lg font-bold">
                   ড্রাইভার রিভিউ ({toBanglaNumber(filteredReviews.length)})
                 </Text>

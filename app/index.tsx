@@ -13,10 +13,7 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-  Checkbox,
-  CheckboxIndicator,
-} from "@/components/ui/checkbox";
+import { Checkbox, CheckboxIndicator } from "@/components/ui/checkbox";
 import RatingButton from "@/components/home/rating-button";
 import ReviewPanel from "@/components/home/review-panel";
 import { mockReviews } from "@/constants/mockReviews";
@@ -57,6 +54,7 @@ export default function Index() {
   const [checkedIds, setCheckedIds] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
   const reviews = useMemo(() => mockReviews, []);
+  const [name, setName] = useState("ড্রাইভার");
 
   const COLLAPSED = SCREEN_HEIGHT * 0.9;
   const EXPANDED = 0;
@@ -139,7 +137,12 @@ export default function Index() {
                     </Text>
                   </View>
 
-                  <RatingButton onPress={() => setOpen(true)} />
+                  <RatingButton
+                    onPress={() => {
+                      setName(item.name);
+                      setOpen(true);
+                    }}
+                  />
 
                   <View className="flex-row items-center ml-2">
                     <View className="bg-red-900/20 rounded-full p-1">
@@ -248,7 +251,13 @@ export default function Index() {
         </ScrollView>
       </Animated.View>
 
-      <ReviewPanel visible={open} onClose={() => setOpen(false)} reviews={reviews} initialRating={"৫.০"} />
+      <ReviewPanel
+        name={name}
+        visible={open}
+        onClose={() => setOpen(false)}
+        reviews={reviews}
+        initialRating={"৫.০"}
+      />
     </View>
   );
 }
