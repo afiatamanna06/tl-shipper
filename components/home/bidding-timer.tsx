@@ -29,9 +29,7 @@ export default function BiddingClock() {
 
   // Convert English digits to Bangla digits
   const toBangla = (str: string) =>
-    str.replace(/[0-9]/g, (d) =>
-      "০১২৩৪৫৬৭৮৯"[parseInt(d, 10)]
-    );
+    str.replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[parseInt(d, 10)]);
 
   const banglaTime = toBangla(englishTime);
 
@@ -42,9 +40,7 @@ export default function BiddingClock() {
       end={{ x: 0, y: 1 }}
       className="px-1 py-0.5 rounded-none"
     >
-      <Text className="text-white font-bold text-xl">
-        {banglaTime}
-      </Text>
+      <Text className="text-white font-bold text-xl">{banglaTime}</Text>
     </LinearGradient>
   );
 }
