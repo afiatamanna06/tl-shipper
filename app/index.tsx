@@ -8,7 +8,6 @@ import {
   PanResponder,
   TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
@@ -17,36 +16,8 @@ import { Checkbox, CheckboxIndicator } from "@/components/ui/checkbox";
 import RatingButton from "@/components/home/rating-button";
 import ReviewPanel from "@/components/home/review-panel";
 import { mockReviews } from "@/constants/mockReviews";
-
-const riders = [
-  {
-    id: 1,
-    name: "Bony Amin",
-    distance: "৭ ফিট ১ টন খোলা",
-    rating: "৪.৮",
-    location: "জিপিএস",
-    price: "৳৯০০",
-    tag: null,
-  },
-  {
-    id: 2,
-    name: "Yeasin Ahmed",
-    distance: "৭ ফিট ১ টন খোলা",
-    rating: "৪.৮",
-    location: "জিপিএস",
-    price: "৳৯০০",
-    tag: "আপনার পছন্দের ড্রাইভার",
-  },
-  {
-    id: 3,
-    name: "Masudul Haque",
-    distance: "৭ ফিট ১ টন খোলা",
-    rating: "৪.৮",
-    location: "জিপিএস",
-    price: "৳৯০০",
-    tag: null,
-  },
-];
+import BiddingTimer from "@/components/home/bidding-timer";
+import { riders } from "@/constants/homeData";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -104,14 +75,7 @@ export default function Index() {
         <TouchableOpacity className="shadow-2xl bg-white py-2 px-3 rounded-full">
           <Text className="text-2xl">←</Text>
         </TouchableOpacity>
-        <LinearGradient
-          colors={["#66BB6A", "#43A047"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          className="px-1 py-0.5 rounded-none"
-        >
-          <Text className="text-white font-bold text-xl">২০:৫৯</Text>
-        </LinearGradient>
+        <BiddingTimer />
       </View>
       <Text className="text-xl font-bold px-5 mt-2 mb-4">বিডিং চলছে</Text>
       <ScrollView className="flex-1 px-4">
@@ -251,6 +215,7 @@ export default function Index() {
         </ScrollView>
       </Animated.View>
 
+      {/* Review Panel */}
       <ReviewPanel
         name={name}
         visible={open}

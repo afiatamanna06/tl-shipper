@@ -1,7 +1,9 @@
-import { parseBanglaDate, Review } from "@/constants/mockReviews";
+import {
+  parseBanglaDate,
+  Review,
+  toBanglaNumber,
+} from "@/constants/mockReviews";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Fontisto from "@expo/vector-icons/Fontisto";
 import {
   Dimensions,
   StyleSheet,
@@ -21,6 +23,7 @@ import { Button } from "../ui/button";
 import FilterPills from "./filter-pills";
 import SortDropdown from "./sort-dropdown";
 import ReviewList from "./review-list";
+import RatingsCard from "./ratings-card";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 const COLLAPSED = SCREEN_HEIGHT * 0.99;
@@ -33,11 +36,6 @@ type Props = {
   reviews: Review[];
   initialRating?: number | string;
   name?: string;
-};
-
-export const toBanglaNumber = (num: number | string) => {
-  const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-  return num.toString().replace(/[0-9]/g, (d) => bengaliDigits[Number(d)]);
 };
 
 export default function ReviewPanel({
@@ -61,7 +59,6 @@ export default function ReviewPanel({
 
   useEffect(() => {
     if (visible) {
-      // Wait for sheet animation to settle
       setTimeout(() => {
         scrollRef.current?.scrollTo({ y: 0, animated: false });
       }, 50);
@@ -88,8 +85,13 @@ export default function ReviewPanel({
   // --- PAN ---
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) =>
-        Math.abs(gestureState.dy) > 5 && !scrollEnabled,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        // If fully expanded → never drag → allow smooth scrolling
+        if (sheetTop <= EXPANDED + 20) return false;
+
+        return Math.abs(gestureState.dy) > 5;
+      },
+
       onPanResponderMove: (_, gestureState) => {
         let newPos = lastOffset.current + gestureState.dy;
         if (newPos < EXPANDED) newPos = EXPANDED;
@@ -99,7 +101,6 @@ export default function ReviewPanel({
       onPanResponderRelease: (_, gestureState) => {
         const endPos = lastOffset.current + gestureState.dy;
 
-        // clamp within range
         let position = Math.max(EXPANDED, Math.min(endPos, COLLAPSED));
 
         // Determine nearest snap point: EXPANDED, MID, COLLAPSED
@@ -145,8 +146,6 @@ export default function ReviewPanel({
     return r;
   }, [reviews, filter, sort]);
 
-  const ratingCount = reviews.length;
-
   return (
     <>
       {/* BACKDROP */}
@@ -186,7 +185,7 @@ export default function ReviewPanel({
             }}
           />
 
-          {/* HEADER: always sticky */}
+          {/* HEADER */}
           <View
             className={`
               px-4 pt-2 pb-3 bg-white z-10 
@@ -207,77 +206,19 @@ export default function ReviewPanel({
             </HStack>
           </View>
 
-          {/* SCROLLABLE REVIEWS */}
           <ScrollView
             ref={scrollRef}
             onScroll={(e) => {
               const y = e.nativeEvent.contentOffset.y;
-              setHasBorder(y > 2); // when scrolled slightly, add border
+              setHasBorder(y > 2);
             }}
             scrollEventThrottle={16}
             scrollEnabled={scrollEnabled}
             contentContainerStyle={{ paddingTop: 0, paddingBottom: 32 }}
-            onTouchStart={() => {
-              if (sheetTop > EXPANDED) setScrollEnabled(false);
-            }}
             stickyHeaderIndices={[0, 1]} // make sort + filter sticky
           >
             {/* Rating Card */}
-            <Box className="mt-4 mx-4 p-4 bg-red-900/5 rounded-xl">
-              <HStack className="items-center">
-                {/* Left Rating */}
-                <VStack className="items-center">
-                  <HStack className="items-center gap-1">
-                    <Text className="text-yellow-500 text-lg ml-1">
-                      <MaterialIcons name="stars" size={24} />
-                    </Text>
-                    <Text className="text-3xl font-bold">
-                      {typeof initialRating === "number"
-                        ? initialRating.toFixed(1)
-                        : initialRating}
-                    </Text>
-                  </HStack>
-                  <Text className="text-gray-600 mt-1">
-                    ({toBanglaNumber(ratingCount)} রেটিং)
-                  </Text>
-                </VStack>
-
-                {/* Bars */}
-                <VStack className="flex-1 ml-6">
-                  {[5, 4, 3, 2, 1].map((s) => {
-                    const total = reviews.length;
-                    const count = reviews.filter((r) => r.rating === s).length;
-                    const percent = total
-                      ? Math.round((count / total) * 100)
-                      : 0;
-                    return (
-                      <HStack key={s} className="items-center mb-1.5">
-                        <Text className="text-xs mr-1">
-                          {toBanglaNumber(s)}
-                        </Text>
-                        <Text className="text-xs text-yellow-500">
-                          <Fontisto name="star" size={10} />
-                        </Text>
-                        <Box className="mx-1 w-40 h-[6px] bg-neutral-200 rounded-full overflow-hidden">
-                          <Box
-                            style={{ width: `${percent}%` }}
-                            className="h-full bg-red-900 rounded-full"
-                          />
-                        </Box>
-                        <Text className="text-gray-500 text-xs text-right w-9">
-                          {(percent.toString().length === 1
-                            ? "  "
-                            : percent.toString().length === 2
-                            ? " "
-                            : "") + toBanglaNumber(percent)}
-                          %
-                        </Text>
-                      </HStack>
-                    );
-                  })}
-                </VStack>
-              </HStack>
-            </Box>
+            <RatingsCard initialRating={initialRating} reviews={reviews} />
 
             {/* Sticky Section 1: Review count + Sort */}
             <View className="bg-white">

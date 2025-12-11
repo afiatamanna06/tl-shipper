@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Button } from "../ui/button";
-import { toBanglaNumber } from "./review-panel";
 import { AntDesign } from "@expo/vector-icons";
+import { toBanglaNumber } from "@/constants/mockReviews";
 
 type Props = {
   selected: number | null;

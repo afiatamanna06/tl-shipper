@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { Menu, MenuItem, MenuItemLabel } from "../ui/menu";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { Button, ButtonText } from "../ui/button";
+import { Button } from "../ui/button";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 type Props = {

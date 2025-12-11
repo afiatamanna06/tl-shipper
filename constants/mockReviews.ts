@@ -13,16 +13,12 @@ export const mockReviews: Review[] = [
   { id: 'r3', rating: 1, text: "খুব বাজে লোক, তার ট্রিপ কেউ নিবেন না। সে মানুষের সাথে অনেক খারাপ ব্যাবহার করে। তার মতো হারামজাদা লোক আমি জীবনে দেখি নাই। ", date: "১ জানুয়ারি ২০২৪", tags: ["খারাপ ব্যবহার"], reviewer: "সাদিয়া" },
   { id: 'r4', rating: 1, text: null, date: "১ জানুয়ারি ২০২৪", tags: ["খারাপ ব্যবহার"], reviewer: "রফিক" },
   { id: 'r5', rating: 1, text: "খুব বাজে লোক, তার ট্রিপ কেউ নিবেন না। সে মানুষের সাথে অনেক খারাপ ব্যাবহার করে। তার মতো হারামজাদা লোক আমি জীবনে দেখি নাই। ", date: "১ জানুয়ারি ২০২৪", tags: ["খারাপ ব্যবহার"], reviewer: "সাদিয়া" },
-  // Add many more for scrolling
-  // ...Array.from({ length: 19 }).map((_, i) => ({
-  //   id: `r${i+4}`,
-  //   rating: Math.ceil(Math.random() * 5),
-  //   text: `সাম্পল রিভিউ নম্বর ${i+4}. (এইটি স্ক্রল টেস্টের জন্য)`,
-  //   date: `২০২৫-০${(i % 9) + 1}-০${(i % 28) + 1}`,
-  //   tags: i % 2 ? ["ভালো ব্যবহার"] : ["তথ্য"]
-  // }))
 ];
 
+export const toBanglaNumber = (num: number | string) => {
+  const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return num.toString().replace(/[0-9]/g, (d) => bengaliDigits[Number(d)]);
+};
 
 // Helper to convert Bangla digits to English
 export function banglaToEnglishNumber(bangla: string) {
