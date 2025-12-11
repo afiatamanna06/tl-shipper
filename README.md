@@ -138,10 +138,9 @@ After Expansion
 
 ### Recording
 
-<video width="480" controls>
-  <source src="./assets/images/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<p>
+   <img src="assets/images/demo.gif" alt="Project Recording" width="300">
+</p>
 
 ---
 
