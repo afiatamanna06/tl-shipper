@@ -162,9 +162,15 @@ After Expansion
 
 ## APK
 
-- Android APK built with Expo: [link-to-apk]
+- Android APK built with Expo: [drive](https://drive.google.com/file/d/1p7c0SlQdrgTpbLhvryQmG-_e324h-RLl/view?usp=sharing)
 
 - Testable directly on Android devices
+
+---
+
+## Assets
+
+- App assets: [drive](https://drive.google.com/drive/folders/1yAcR8yAu-_mmP4-I1XwLCWRdTf2YExB-?usp=sharing)
 
 ---
 
