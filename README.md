@@ -112,26 +112,36 @@ This project demonstrates advanced gesture-based interactions, sticky headers, a
 
 ## Screenshots / Recording
 
-## ScreenShots
+### ScreenShots
 Home Screen 
 
 <p>
-   <img src="assets/images/screenshot1.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo1.jpg" alt="Project Screenshot" width="300">
 </p>
 
 Review Panel
 
 <p>
-   <img src="assets/images/screenshot2.jpg" alt="Project Screenshot" width="300">
-   <img src="assets/images/screenshot3.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo2.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo3.jpg" alt="Project Screenshot" width="300">
 </p>
 
 After Expansion
 
 <p>
-   <img src="assets/images/screenshot4.jpg" alt="Project Screenshot" width="300">
-   <img src="assets/images/screenshot5.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo4.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo5.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo6.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo7.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/photo8.jpg" alt="Project Screenshot" width="300">
 </p>
+
+### Recording
+
+<video width="480" controls>
+  <source src="./assets/images/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ---
 
