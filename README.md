@@ -42,8 +42,8 @@ This project demonstrates advanced gesture-based interactions, sticky headers, a
 1. **Clone the repository**
    
    ```bash
-   git clone https://github.com/yourusername/repo-name.git
-   cd repo-name
+   git clone https://github.com/afiatamanna06/tl-shipper
+   cd tl-shipper
    ```
 
 2. Install dependencies
@@ -110,31 +110,52 @@ This project demonstrates advanced gesture-based interactions, sticky headers, a
 
 ---
 
-## Code Overview
+## Screenshots / Recording
 
-- **GRID_SIZE**: Size of the grid (5x5).  
-- **OBSTACLES**: List of grid coordinates that cannot be entered.  
-- **HAZARDS**: Grid coordinates with negative rewards and possible stochastic effects.  
-- **GOAL**: The target state with positive reward.  
-- **ACTIONS**: Possible moves (up, down, left, right).  
-- **value_iteration()**: Main algorithm that computes values and policy.  
-- **apply_stochastic_hazard()**: Applies random hazard effects in stochastic mode.  
-- **print_value_function()** and **print_policy()**: Display results with colors.  
+## ScreenShots
+Home Screen 
+
+<p>
+   <img src="assets/images/screenshot1.jpg" alt="Project Screenshot" width="300">
+</p>
+
+Review Panel
+
+<p>
+   <img src="assets/images/screenshot2.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/screenshot3.jpg" alt="Project Screenshot" width="300">
+</p>
+
+After Expansion
+
+<p>
+   <img src="assets/images/screenshot4.jpg" alt="Project Screenshot" width="300">
+   <img src="assets/images/screenshot5.jpg" alt="Project Screenshot" width="300">
+</p>
 
 ---
 
-## Customization
+## Evaluation Notes
 
-- Modify grid size, obstacles, hazards, and rewards by changing the respective variables.  
-- Adjust stochastic hazard probabilities (`HAZARD_TELEPORT_PROB`, `HAZARD_PUSH_PROB`).  
-- Tweak discount factor (`GAMMA`) and action success probability (`ACTION_SUCCESS_PROB`).  
+- **Architecture:** Modular components (ReviewPanel, ReviewList, FilterPills, SortDropdown)
+
+- **UI Accuracy:** Matches design screens and flow video
+
+- **Interaction Smoothness:** Draggable panel snaps naturally; scroll is smooth
+
+- **Code Quality & Readability:** TypeScript + Gluestack UI + Nativewind; clean and maintainable
+
+- **Scalability:** Components reusable; review list handles dynamic data efficiently
+
+- **Documentation:** Clear explanation of architecture, gestures, sticky header, and loading/empty states
 
 ---
 
-## References
+## APK
 
-- Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction* (2nd ed.).  
-- Classic grid world examples in reinforcement learning.  
+- Android APK built with Expo: [link-to-apk]
+
+- Testable directly on Android devices
 
 ---
 
