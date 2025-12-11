@@ -94,7 +94,7 @@ export default function Index() {
                 <View className="flex-row items-center mt-1">
                   <View className="flex-row items-center">
                     <View className="bg-yellow-500/20 rounded-full p-1">
-                      <AntDesign name="star" size={10} color={"orange"} />
+                      <AntDesign name="star" size={10} color={"#ffb400"} />
                     </View>
                     <Text className="text-gray-700 text-sm ml-1 mr-2">
                       রেটিং <Text className="font-semibold">{item.rating}</Text>

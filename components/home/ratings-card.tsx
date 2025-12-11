@@ -19,7 +19,7 @@ const RatingsCard = ({ initialRating, reviews }: RatingsCardProps) => {
         {/* Left Rating */}
         <VStack className="items-center">
           <HStack className="items-center gap-1">
-            <Text className="text-yellow-500 text-lg ml-1">
+            <Text className="text-[#ffb400] text-lg ml-1">
               <MaterialIcons name="stars" size={24} />
             </Text>
             <Text className="text-3xl font-bold">
@@ -42,7 +42,7 @@ const RatingsCard = ({ initialRating, reviews }: RatingsCardProps) => {
             return (
               <HStack key={s} className="items-center mb-1.5">
                 <Text className="text-xs mr-1">{toBanglaNumber(s)}</Text>
-                <Text className="text-xs text-yellow-500">
+                <Text className="text-xs text-[#ffb400]">
                   <Fontisto name="star" size={10} />
                 </Text>
                 <Box className="mx-1 w-40 h-[6px] bg-neutral-200 rounded-full overflow-hidden">
