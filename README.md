@@ -42,7 +42,7 @@ This project demonstrates advanced gesture-based interactions, sticky headers, a
 1. **Clone the repository**
    
    ```bash
-   git clone https://github.com/afiatamanna06/tl-shipper
+   git clone git@github.com:afiatamanna06/tl-shipper.git
    cd tl-shipper
    ```
 
